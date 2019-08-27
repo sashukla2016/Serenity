@@ -9,7 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-public class LoginStepDefinition {
+import net.serenitybdd.core.pages.PageObject;
+public class LoginStepDefinition{
 
 	//WebDriver driver=Hooks.driver;
 	WebDriver driver;
@@ -17,8 +18,7 @@ public class LoginStepDefinition {
 	@Given("^launch the browser and open the application$")
 	public void launch_the_browser_and_open_the_application() {
 		
-		  System.setProperty("webdriver.chrome.driver",
-		  "C:\\poi-4.1.0\\WebDriver\\chromedriver.exe"); 
+		  System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver.exe"); 
 		  driver = new ChromeDriver();
 		 
 		driver.get("http://www.ourgoalplan.com");
