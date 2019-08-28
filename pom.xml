@@ -137,7 +137,7 @@
 						<id>serenity-reports</id>
 						<phase>post-integration-test</phase>
 						<goals>
-							<goal>package</goal>
+							<goal>aggregate</goal>
 						</goals>
 					</execution>
 				</executions>
