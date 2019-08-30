@@ -12,7 +12,7 @@ import net.thucydides.core.util.EnvironmentVariables;
 @CucumberOptions(
 		features = "src/test/resources",
 		glue = {"com/gps/cucumber/stepDefinition"},
-		tags= {"@RegressionTest"},
+		tags= {"@smoke"},
 		dryRun=false
 		)
 
