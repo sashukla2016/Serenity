@@ -1,13 +1,19 @@
 package com.gps.cucumber.stepDefinition;
 
+import java.io.FileInputStream;
+//import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 //import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -27,6 +33,7 @@ public class GmailStepDefinition extends PageObject {
 	EnvironmentVariables env;
 	String url;
 	WebDriverWait wait;
+	public static Properties prop;
 
 	//Page Objects
 	@FindBy(xpath = "//input[@type='email' and @id='identifierId']")
@@ -35,6 +42,9 @@ public class GmailStepDefinition extends PageObject {
 	@FindBy(css = "#password > div.aCsJod.oJeWuf > div > div.Xb9hP > input")
 	WebElementFacade password;
 
+	@FindBy(xpath="//span[contains(text(),'Wrong password')]")
+	WebElementFacade wrongPass;
+	
 	//div[text()='Social']
 	@FindBy(xpath="//div[text()='Primary']")
 	WebElementFacade social;
@@ -45,13 +55,15 @@ public class GmailStepDefinition extends PageObject {
 	@FindAll(value = { @FindBy (xpath="//tr[@class='zA zE']/td[2]") })
 	List<WebElementFacade> emails;
 
+	
 	@Given("^I login to the application successfully$")
-	public void i_login_to_the_application_successfully() {
+	public void i_login_to_the_application_successfully() throws IOException {
 		url= ThucydidesSystemProperty.WEBDRIVER_BASE_URL.from(env);
-
 		driver.manage().window().maximize();
 		driver.get(url);
-
+		prop=new Properties();
+		FileInputStream in=new FileInputStream("./serenity.properties");
+		prop.load(in);
 		System.out.println(userId.getValue());
 		//=driver.findElement(By.xpath("//input[@type='email' and @id='identifierId']"));
 		//WebElementFacade password=(WebElementFacade) driver.findElement(By.xpath("//input[@type='password']"));
@@ -59,18 +71,20 @@ public class GmailStepDefinition extends PageObject {
 
 		userId.waitUntilClickable();
 		userId.click();
-		userId.sendKeys("stest735@gmail.com");
+		userId.sendKeys(prop.getProperty("username"));
 
 
 		btn.click();
 
 		password.waitUntilVisible(); 
 		password.click();
-		password.sendKeys("S@1989test");
+		password.sendKeys(prop.getProperty("password"));
 
 		WebElement btn2=driver.findElement(By.xpath("//span[text()='Next']"));
 
 		btn2.click();
+		
+		Assert.assertFalse(wrongPass.isPresent());
 
 	}
 
