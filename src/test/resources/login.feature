@@ -2,8 +2,8 @@ Feature: Goal Plan System application Login
 
 @RegressionTest @End2End
 Scenario: GPS Login Test Scenario
-	Given launch the browser and open the application
+	Given I am on the application login page
 	When I login with valid credentials
-	Then I login successfully
+	Then I am on the home page of the GPS application
 	
 

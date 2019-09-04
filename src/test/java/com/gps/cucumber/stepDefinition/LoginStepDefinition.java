@@ -1,31 +1,26 @@
 package com.gps.cucumber.stepDefinition;
 
-import org.apache.tools.ant.property.GetProperty;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-//import org.openqa.selenium.WebElement;
-//import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import cucumber.api.java.Before;
+import org.openqa.selenium.support.FindBy;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.pages.PageObject;
+import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.ThucydidesSystemProperty;
-import net.thucydides.core.annotations.DefaultUrl;
-import net.thucydides.core.annotations.Managed;
-import net.thucydides.core.annotations.Screenshots;
-import net.thucydides.core.annotations.Step;
 import net.thucydides.core.util.EnvironmentVariables;
-import net.thucydides.core.webdriver.SerenityWebdriverManager;
 
-public class LoginStepDefinition{
+public class LoginStepDefinition extends PageObject{
 
-	//WebDriver driver=Hooks.driver;
-	@Managed
-	WebDriver driver;
+	//Page Objects
+	@FindBy(id = "txtName")
+	WebElementFacade username;
+	
+	@FindBy(id = "txtPassword")
+	WebElementFacade password;
+	
+	@FindBy(id = "btnLogin")
+	WebElementFacade loginBtn;
+	
 	EnvironmentVariables env;
 	//
 	
@@ -40,32 +35,29 @@ public class LoginStepDefinition{
 	 * ThucydidesSystemProperty.WEBDRIVER_BASE_URL.from(env); }
 	 */
 	
-	@Given("^launch the browser and open the application$")
-	public void launch_the_browser_and_open_the_application() {
-		//System.out.println("UURRRLLLLL"+url);
-		 // System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver.exe"); 
-		  //driver = new ChromeDriver();
-		//driver.get("http://www.ourgoalplan.com");
+	@Given("^I am on the application login page$")
+	public void i_am_on_the_application_login_page() {
+		
 		String url=ThucydidesSystemProperty.WEBDRIVER_BASE_URL.from(env);
-		driver.get(url);	
+		openUrl(url);
+		
 	}
 
 	//@Step
 	//@Screenshots(afterEachStep=true)
 	@When("^I login with valid credentials$") 
 	public void i_login_with_valid_credentials() {
-		driver.findElement(By.id("txtName")).sendKeys("saumyas");
-		//Serenity.takeScreenshot();
-		//Serenity.recordReportData();
-		driver.findElement(By.id("txtPassword")).sendKeys("Saumya@12"); }
+		
+		username.sendKeys("saumyas");
+		password.sendKeys("Saumya@12");
+	}
 
 	//@Step
 	//@Screenshots(afterEachStep=true)
-	@Then("^I login successfully$")
-	public void i_login_successfully() throws InterruptedException {
+	@Then("^I am on the home page of the GPS application$")
+	public void i_am_on_the_home_page_of_the_GPS_application(){
 		
-		driver.findElement(By.id("btnLogin")).click();
-		//Serenity.takeScreenshot();
+		loginBtn.click();
 	}
 
 }

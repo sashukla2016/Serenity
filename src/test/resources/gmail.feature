@@ -5,6 +5,6 @@ Background:
 
 @smoke
 Scenario: Deleting emails from the account
-	Given I navigate to social tab of inbox
-	When I delete few emails 
-	Then I should see the notification for deleted emails
+	Given I navigate to primary tab of inbox
+	When I delete an email 
+	Then I should see the notification for the deleted email
